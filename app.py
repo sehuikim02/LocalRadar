@@ -27,21 +27,39 @@ st.markdown("""
 <style>
     @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
 
-    /* 전체 폰트 및 기본 배경 (눈이 편안한 웜 아이보리) */
+    /* 1. 전체 베이스 배경 및 폰트 강제 통일 */
     html, body, [class*="css"], [data-testid="stAppViewContainer"], .stApp {
         font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif !important;
         background-color: #FAF9F6 !important;
         color: #1E1E1E !important;
     }
 
-    /* 메인 컨테이너 최대 너비 및 여백 최적화 */
+    /* 2. 다크모드 충돌 방지: 헤더 및 툴바 배경 강제 라이트화 */
+    [data-testid="stHeader"] {
+        background-color: rgba(250, 249, 246, 0.95) !important;
+        border-bottom: 1px solid #EAE6DF !important;
+    }
+
+    /* 3. Streamlit st.status 및 확장 블록의 어두운 배경 방어 */
+    [data-testid="stStatusWidget"], [data-testid="stExpander"], div[data-testid="stExpander"] details {
+        background-color: #FFFFFF !important;
+        border: 1px solid #EAE6DF !important;
+        border-radius: 14px !important;
+        color: #1E1E1E !important;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.02) !important;
+    }
+    [data-testid="stStatusWidget"] * {
+        color: #1E1E1E !important;
+    }
+
+    /* 4. 메인 컨테이너 최대 너비 및 여백 최적화 */
     .block-container {
         padding-top: 2rem !important;
         padding-bottom: 4rem !important;
         max-width: 1280px !important;
     }
 
-    /* 사이드바 스타일링: 깨끗한 화이트 배경 + 세련된 보더 */
+    /* 5. 사이드바 스타일링: 순백색 배경 + 깔끔한 우측 경계선 */
     [data-testid="stSidebar"] {
         background-color: #FFFFFF !important;
         border-right: 1px solid #EAE6DF !important;
@@ -50,52 +68,72 @@ st.markdown("""
     }
     [data-testid="stSidebarUserContent"] {
         padding: 2rem 1.6rem !important;
+        background-color: #FFFFFF !important;
+    }
+    [data-testid="stSidebar"] * {
+        color: #1E1E1E !important;
     }
 
     /* 사이드바 헤더 및 뱃지 */
     .sidebar-brand-badge {
         display: inline-block;
-        background: #FFF0EB;
-        color: #FF5A36;
-        font-size: 0.75rem;
-        font-weight: 700;
-        padding: 4px 10px;
-        border-radius: 20px;
-        letter-spacing: 0.05em;
-        text-transform: uppercase;
-        margin-bottom: 0.6rem;
+        background: #FFF0EB !important;
+        color: #FF5A36 !important;
+        font-size: 0.75rem !important;
+        font-weight: 700 !important;
+        padding: 4px 10px !important;
+        border-radius: 20px !important;
+        letter-spacing: 0.05em !important;
+        text-transform: uppercase !important;
+        margin-bottom: 0.6rem !important;
     }
     .sidebar-title {
-        font-size: 1.4rem;
-        font-weight: 800;
-        color: #1E1E1E;
-        letter-spacing: -0.02em;
-        margin-bottom: 0.3rem;
+        font-size: 1.4rem !important;
+        font-weight: 800 !important;
+        color: #1E1E1E !important;
+        letter-spacing: -0.02em !important;
+        margin-bottom: 0.3rem !important;
     }
     .sidebar-subtitle {
-        font-size: 0.88rem;
-        color: #71717A;
-        line-height: 1.4;
-        margin-bottom: 1.8rem;
+        font-size: 0.88rem !important;
+        color: #71717A !important;
+        line-height: 1.4 !important;
+        margin-bottom: 1.8rem !important;
     }
 
-    /* 텍스트 입력 필드 고도화 */
+    /* 6. 입력 위젯(TextInput, Multiselect, Radio) 시인성 및 테두리 복구 */
     [data-testid="stTextInput"] input {
-        background-color: #FAFAFA !important;
-        border: 1px solid #E4E4E7 !important;
+        background-color: #FFFFFF !important;
+        border: 1px solid #D4D4D8 !important;
         border-radius: 10px !important;
         padding: 0.75rem 1rem !important;
         font-size: 1rem !important;
         color: #18181B !important;
-        transition: all 0.2s ease;
+        transition: all 0.2s ease !important;
     }
     [data-testid="stTextInput"] input:focus {
         border-color: #FF5A36 !important;
         box-shadow: 0 0 0 3px rgba(255, 90, 54, 0.15) !important;
-        background-color: #FFFFFF !important;
     }
 
-    /* 사이드바 스캔 CTA 버튼: 코랄 그라데이션 + 3D 그림자 + 호버 */
+    /* 멀티셀렉트 박스 및 태그 칩 */
+    [data-testid="stMultiSelect"] div[data-baseweb="select"] {
+        background-color: #FFFFFF !important;
+        border: 1px solid #D4D4D8 !important;
+        border-radius: 10px !important;
+    }
+    [data-testid="stMultiSelect"] span[data-baseweb="tag"] {
+        background-color: #FFF0EB !important;
+        color: #FF5A36 !important;
+        border: 1px solid #FFD8CE !important;
+        border-radius: 6px !important;
+        font-weight: 600 !important;
+    }
+    [data-testid="stMultiSelect"] span[data-baseweb="tag"] * {
+        color: #FF5A36 !important;
+    }
+
+    /* 7. 사이드바 스캔 CTA 버튼: 코랄 그라데이션 + 3D 그림자 + 호버 */
     div[data-testid="stSidebar"] div.stButton > button[kind="primary"] {
         background: linear-gradient(135deg, #FF6B4A 0%, #FF451A 100%) !important;
         color: #FFFFFF !important;
@@ -113,17 +151,20 @@ st.markdown("""
         box-shadow: 0 10px 24px rgba(255, 69, 26, 0.38) !important;
         background: linear-gradient(135deg, #FF7B5C 0%, #FF3D10 100%) !important;
     }
+    div[data-testid="stSidebar"] div.stButton > button[kind="primary"] * {
+        color: #FFFFFF !important;
+    }
 
-    /* 상단 히어로 배너 (Hero Magazine Card) */
+    /* 8. 상단 히어로 배너 (Hero Magazine Card) */
     .hero-banner {
-        background: linear-gradient(135deg, #FFF6F3 0%, #FFF0EB 60%, #FFE9E2 100%);
-        border: 1px solid #FCDDD4;
-        border-radius: 20px;
-        padding: 2.4rem 2.8rem;
-        margin-bottom: 2rem;
-        position: relative;
-        overflow: hidden;
-        box-shadow: 0 8px 30px rgba(255, 90, 54, 0.06);
+        background: linear-gradient(135deg, #FFF6F3 0%, #FFF0EB 60%, #FFE9E2 100%) !important;
+        border: 1px solid #FCDDD4 !important;
+        border-radius: 20px !important;
+        padding: 2.4rem 2.8rem !important;
+        margin-bottom: 2rem !important;
+        position: relative !important;
+        overflow: hidden !important;
+        box-shadow: 0 8px 30px rgba(255, 90, 54, 0.06) !important;
     }
     .hero-banner::after {
         content: "LOCAL RADAR";
@@ -137,46 +178,46 @@ st.markdown("""
         pointer-events: none;
     }
     .hero-tag {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        background: #FFFFFF;
-        color: #FF5A36;
-        border: 1px solid #FFD8CE;
-        padding: 5px 12px;
-        border-radius: 30px;
-        font-size: 0.8rem;
-        font-weight: 700;
-        margin-bottom: 1rem;
-        box-shadow: 0 2px 8px rgba(255, 90, 54, 0.08);
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 6px !important;
+        background: #FFFFFF !important;
+        color: #FF5A36 !important;
+        border: 1px solid #FFD8CE !important;
+        padding: 5px 12px !important;
+        border-radius: 30px !important;
+        font-size: 0.8rem !important;
+        font-weight: 700 !important;
+        margin-bottom: 1rem !important;
+        box-shadow: 0 2px 8px rgba(255, 90, 54, 0.08) !important;
     }
     .hero-title {
-        font-size: 2.2rem;
-        font-weight: 800;
-        color: #18181B;
-        letter-spacing: -0.03em;
-        line-height: 1.25;
-        margin-bottom: 0.6rem;
+        font-size: 2.2rem !important;
+        font-weight: 800 !important;
+        color: #18181B !important;
+        letter-spacing: -0.03em !important;
+        line-height: 1.25 !important;
+        margin-bottom: 0.6rem !important;
     }
     .hero-desc {
-        font-size: 1.05rem;
-        color: #52525B;
-        line-height: 1.6;
-        max-width: 680px;
-        margin-bottom: 1.2rem;
+        font-size: 1.05rem !important;
+        color: #52525B !important;
+        line-height: 1.6 !important;
+        max-width: 680px !important;
+        margin-bottom: 1.2rem !important;
     }
     .hero-status-pill {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        background: rgba(255, 255, 255, 0.85);
-        backdrop-filter: blur(8px);
-        padding: 6px 14px;
-        border-radius: 12px;
-        border: 1px solid #E4E4E7;
-        font-size: 0.82rem;
-        color: #3F3F46;
-        font-weight: 600;
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 8px !important;
+        background: rgba(255, 255, 255, 0.9) !important;
+        backdrop-filter: blur(8px) !important;
+        padding: 6px 14px !important;
+        border-radius: 12px !important;
+        border: 1px solid #E4E4E7 !important;
+        font-size: 0.82rem !important;
+        color: #3F3F46 !important;
+        font-weight: 600 !important;
     }
     .status-dot {
         width: 8px;
@@ -187,7 +228,7 @@ st.markdown("""
         box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
     }
 
-    /* 프로그레스 바 커스텀 */
+    /* 9. 프로그레스 바 커스텀 */
     [data-testid="stProgress"] > div > div > div > div {
         background: linear-gradient(90deg, #FF6B4A 0%, #FF451A 100%) !important;
         border-radius: 10px !important;
@@ -204,178 +245,199 @@ st.markdown("""
         font-size: 0.95rem !important;
     }
 
-    /* 스탯 KPI 매거진 카드 */
+    /* 10. 스탯 KPI 매거진 카드 */
     .stat-card {
-        background: #FFFFFF;
-        border: 1px solid #EFECE6;
-        border-radius: 16px;
-        padding: 1.5rem;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
-        position: relative;
-        overflow: hidden;
-        transition: transform 0.2s ease;
+        background: #FFFFFF !important;
+        border: 1px solid #EFECE6 !important;
+        border-radius: 16px !important;
+        padding: 1.5rem !important;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03) !important;
+        position: relative !important;
+        overflow: hidden !important;
+        transition: transform 0.2s ease !important;
     }
     .stat-card:hover {
-        transform: translateY(-2px);
+        transform: translateY(-2px) !important;
     }
-    .stat-card-accent-1 { border-top: 4px solid #3B82F6; }
-    .stat-card-accent-2 { border-top: 4px solid #FF5A36; background: #FFFDFD; }
-    .stat-card-accent-3 { border-top: 4px solid #10B981; }
+    .stat-card-accent-1 { border-top: 4px solid #3B82F6 !important; }
+    .stat-card-accent-2 { border-top: 4px solid #FF5A36 !important; background: #FFFDFD !important; }
+    .stat-card-accent-3 { border-top: 4px solid #10B981 !important; }
     .stat-label {
-        font-size: 0.88rem;
-        font-weight: 600;
-        color: #71717A;
-        margin-bottom: 0.4rem;
+        font-size: 0.88rem !important;
+        font-weight: 600 !important;
+        color: #71717A !important;
+        margin-bottom: 0.4rem !important;
     }
     .stat-value {
-        font-size: 2rem;
-        font-weight: 800;
-        color: #18181B;
-        letter-spacing: -0.02em;
+        font-size: 2rem !important;
+        font-weight: 800 !important;
+        color: #18181B !important;
+        letter-spacing: -0.02em !important;
     }
     .stat-sub {
-        font-size: 0.78rem;
-        color: #A1A1AA;
-        margin-top: 0.3rem;
+        font-size: 0.78rem !important;
+        color: #A1A1AA !important;
+        margin-top: 0.3rem !important;
     }
 
-    /* 상권 브리핑 카드 */
+    /* 11. 상권 브리핑 카드 */
     .briefing-box {
-        background: #FFFFFF;
-        border: 1px solid #FFE4DC;
-        border-left: 5px solid #FF5A36;
-        border-radius: 14px;
-        padding: 1.4rem 1.6rem;
-        margin: 1.6rem 0;
-        box-shadow: 0 4px 16px rgba(255, 90, 54, 0.04);
+        background: #FFFFFF !important;
+        border: 1px solid #FFE4DC !important;
+        border-left: 5px solid #FF5A36 !important;
+        border-radius: 14px !important;
+        padding: 1.4rem 1.6rem !important;
+        margin: 1.6rem 0 !important;
+        box-shadow: 0 4px 16px rgba(255, 90, 54, 0.04) !important;
     }
     .briefing-title {
-        font-size: 1rem;
-        font-weight: 800;
-        color: #FF5A36;
-        margin-bottom: 0.5rem;
-        display: flex;
-        align-items: center;
-        gap: 6px;
+        font-size: 1rem !important;
+        font-weight: 800 !important;
+        color: #FF5A36 !important;
+        margin-bottom: 0.5rem !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 6px !important;
     }
     .briefing-text {
-        font-size: 0.98rem;
-        color: #27272A;
-        line-height: 1.65;
+        font-size: 0.98rem !important;
+        color: #27272A !important;
+        line-height: 1.65 !important;
     }
 
-    /* 핫플 TOP 10 큐레이션 카드 (호버 애니메이션) */
+    /* 12. 핫플 TOP 10 큐레이션 카드 (회색 먹통 방지: 선명한 화이트 카드 + 코랄 버튼) */
     .hotspot-card {
-        background: #FFFFFF;
-        border: 1px solid #EFECE6;
-        border-radius: 16px;
-        padding: 1.3rem;
-        height: 100%;
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
-        transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
+        background: #FFFFFF !important;
+        border: 1px solid #EAE6DF !important;
+        border-radius: 16px !important;
+        padding: 1.4rem !important;
+        height: 100% !important;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03) !important;
+        transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: space-between !important;
     }
     .hotspot-card:hover {
-        transform: translateY(-4px);
-        border-color: #FF5A36;
-        box-shadow: 0 10px 25px rgba(255, 90, 54, 0.12);
+        transform: translateY(-4px) !important;
+        border-color: #FF5A36 !important;
+        box-shadow: 0 10px 25px rgba(255, 90, 54, 0.12) !important;
     }
     .hotspot-badge {
-        display: inline-block;
-        background: #F4F4F5;
-        color: #71717A;
-        font-size: 0.68rem;
-        font-weight: 700;
-        padding: 3px 8px;
-        border-radius: 12px;
-        letter-spacing: 0.04em;
-        text-transform: uppercase;
-        margin-bottom: 0.6rem;
+        display: inline-block !important;
+        background: #FFF0EB !important;
+        color: #FF5A36 !important;
+        font-size: 0.7rem !important;
+        font-weight: 800 !important;
+        padding: 3px 8px !important;
+        border-radius: 8px !important;
+        letter-spacing: 0.04em !important;
+        text-transform: uppercase !important;
+        margin-bottom: 0.6rem !important;
     }
     .hotspot-name {
-        font-size: 1.15rem;
-        font-weight: 800;
-        color: #18181B;
-        margin-bottom: 0.4rem;
+        font-size: 1.2rem !important;
+        font-weight: 800 !important;
+        color: #18181B !important;
+        margin-bottom: 0.4rem !important;
     }
     .hotspot-desc {
-        font-size: 0.82rem;
-        color: #71717A;
-        line-height: 1.5;
-        margin-bottom: 1rem;
-        flex-grow: 1;
+        font-size: 0.85rem !important;
+        color: #52525B !important;
+        line-height: 1.5 !important;
+        margin-bottom: 1.2rem !important;
+        flex-grow: 1 !important;
     }
 
-    /* 베스트 픽 카드 스타일링 */
+    /* 핫플 카드 내부 '바로 스캔' 버튼 스타일링 (회색 버튼 탈피) */
+    div[data-testid="stColumn"] div.stButton > button {
+        background-color: #FFFFFF !important;
+        color: #FF5A36 !important;
+        border: 1px solid #FFD8CE !important;
+        border-radius: 10px !important;
+        font-weight: 700 !important;
+        font-size: 0.9rem !important;
+        padding: 0.5rem 0.8rem !important;
+        transition: all 0.2s ease !important;
+    }
+    div[data-testid="stColumn"] div.stButton > button:hover {
+        background-color: #FF5A36 !important;
+        color: #FFFFFF !important;
+        border-color: #FF5A36 !important;
+        box-shadow: 0 4px 14px rgba(255, 90, 54, 0.25) !important;
+    }
+    div[data-testid="stColumn"] div.stButton > button:hover * {
+        color: #FFFFFF !important;
+    }
+
+    /* 13. 베스트 픽 카드 스타일링 */
     .best-card {
-        background: #FFFFFF;
-        border: 1px solid #EFECE6;
-        border-radius: 18px;
-        padding: 1.6rem;
-        height: 100%;
-        box-shadow: 0 6px 22px rgba(0, 0, 0, 0.04);
-        position: relative;
-        transition: all 0.25s ease;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
+        background: #FFFFFF !important;
+        border: 1px solid #EFECE6 !important;
+        border-radius: 18px !important;
+        padding: 1.6rem !important;
+        height: 100% !important;
+        box-shadow: 0 6px 22px rgba(0, 0, 0, 0.04) !important;
+        position: relative !important;
+        transition: all 0.25s ease !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: space-between !important;
     }
     .best-card:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 12px 28px rgba(0, 0, 0, 0.07);
+        transform: translateY(-3px) !important;
+        box-shadow: 0 12px 28px rgba(0, 0, 0, 0.07) !important;
     }
     .best-card-first {
         border: 2px solid #FF5A36 !important;
         box-shadow: 0 8px 26px rgba(255, 90, 54, 0.1) !important;
     }
     .ribbon-badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 4px;
-        background: #FF5A36;
-        color: #FFFFFF;
-        font-size: 0.75rem;
-        font-weight: 800;
-        padding: 4px 10px;
-        border-radius: 6px;
-        margin-bottom: 0.8rem;
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 4px !important;
+        background: #FF5A36 !important;
+        color: #FFFFFF !important;
+        font-size: 0.75rem !important;
+        font-weight: 800 !important;
+        padding: 4px 10px !important;
+        border-radius: 6px !important;
+        margin-bottom: 0.8rem !important;
     }
     .normal-badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 4px;
-        background: #F4F4F5;
-        color: #3F3F46;
-        font-size: 0.75rem;
-        font-weight: 700;
-        padding: 4px 10px;
-        border-radius: 6px;
-        margin-bottom: 0.8rem;
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 4px !important;
+        background: #F4F4F5 !important;
+        color: #3F3F46 !important;
+        font-size: 0.75rem !important;
+        font-weight: 700 !important;
+        padding: 4px 10px !important;
+        border-radius: 6px !important;
+        margin-bottom: 0.8rem !important;
     }
     .best-place-title {
-        font-size: 1.35rem;
-        font-weight: 800;
-        color: #18181B;
-        margin-bottom: 0.6rem;
-        line-height: 1.3;
+        font-size: 1.35rem !important;
+        font-weight: 800 !important;
+        color: #18181B !important;
+        margin-bottom: 0.6rem !important;
+        line-height: 1.3 !important;
     }
     .best-menu-box {
-        background: #FAFAFA;
-        border: 1px solid #F4F4F5;
-        border-radius: 10px;
-        padding: 0.6rem 0.8rem;
-        font-size: 0.85rem;
-        color: #27272A;
-        margin-bottom: 0.8rem;
+        background: #FAFAFA !important;
+        border: 1px solid #F4F4F5 !important;
+        border-radius: 10px !important;
+        padding: 0.6rem 0.8rem !important;
+        font-size: 0.85rem !important;
+        color: #27272A !important;
+        margin-bottom: 0.8rem !important;
     }
     .best-reason {
-        font-size: 0.88rem;
-        color: #52525B;
-        line-height: 1.6;
-        margin-bottom: 1.2rem;
-        flex-grow: 1;
+        font-size: 0.88rem !important;
+        color: #52525B !important;
+        line-height: 1.6 !important;
+        margin-bottom: 1.2rem !important;
+        flex-grow: 1 !important;
     }
 </style>
 """, unsafe_allow_html=True)
